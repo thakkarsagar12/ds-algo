@@ -9,15 +9,20 @@ public class RemoveMaxAndMinTillLastRemains {
             System.out.print(j + " ");
         }
         System.out.println();
-        if (arr.length > 1) {
-            int maxIndex = findMaxIndex(arr);
-            arr = removeElement(arr, maxIndex);
+
+        int[] minAndMax = findMinAndMaxIndex(arr);
+
+        if (arr.length >= 3) {
+            arr = removeElement(arr, arr[minAndMax[0]]);
+            arr = removeElement(arr, arr[minAndMax[1]]);
             removeMaxAndMinTillLastRemains(arr);
         }
-        else if (arr.length > 1) {
-            int minIndex = findMinIndex(arr);
-            arr = removeElement(arr, minIndex);
-            removeMaxAndMinTillLastRemains(arr);
+        else if (arr.length == 2) {
+            if (arr[0] > arr[1]) {
+                System.out.println("The last element remaining is: " + arr[0]);
+            } else {
+                System.out.println("The last element remaining is: " + arr[1]);
+            }
         }
         else {
             for (int j : arr) {
@@ -51,6 +56,23 @@ public class RemoveMaxAndMinTillLastRemains {
         return minIndex;
     }
 
+    static int[] findMinAndMaxIndex(int[] arr){
+        int min = arr[0];
+        int minIndex = 0;
+        int max = arr[0];
+        int maxIndex = 0;
+        for (int i = 0; i < arr.length-1 ; i++) {
+            if (arr[i] < min) {
+                min = arr[i];
+                minIndex = i;
+            }
+            if (arr[i] > max) {
+                max = arr[i];
+                maxIndex = i;
+            }
+        }
+        return new int[]{minIndex, maxIndex};
+    }
     static int[] removeElement(int[] arr, int index){
         int[] arr2 = new int[arr.length-1];
         for (int i = 0; i < arr.length-1; i++) {
